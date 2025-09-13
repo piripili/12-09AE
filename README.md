@@ -19,7 +19,7 @@
 
 ## 🌐 Página en línea
 
-Accede a tu proyecto publicado en **GitHub Pages**:  
+Accede a este proyecto publicado en **GitHub**:  
 [💙💚 Feliz Aniversario Interactivo](https://piripili.github.io/12-09AE/)
 
 ---
