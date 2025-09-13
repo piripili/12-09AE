@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feliz Aniversario Interactivo</title>
+
+<!-- Fuentes Google -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Raleway:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+<style>
+body { margin:0; font-family: 'Raleway', sans-serif; text-align:center; color:#0a0a0a; overflow-x:hidden; transition: background 1s ease;}
+h1 { font-size:2.5em; font-family:'Lato',sans-serif; animation:fadeIn 2s ease-in;}
+h2 { font-weight: normal; font-size:1.2em;}
+header { padding:40px 15px;}
+.counter { font-size:1.5em; color:#000; margin-top:10px; font-weight:bold;}
+
+.carousel-container { position:relative; width:85%; max-width:380px; margin:25px auto; overflow:hidden;}
+.polaroid { background:#fff; padding:10px 10px 30px; border-radius:8px; box-shadow:0 10px 18px rgba(0,0,0,0.25); position:relative;}
+.polaroid img { width:100%; max-height:320px; object-fit:cover; border-radius:4px; display:block;}
+.caption { margin-top:8px; font-size:0.9em; color:#444; font-style:italic;}
+.heart-nav { position:absolute; top:50%; transform:translateY(-50%); background-color:#2193b0; color:white; font-size:22px; width:45px; height:45px; border-radius:50%; border:none; cursor:pointer; transition:background 0.3s, transform 0.2s; z-index:1;}
+.heart-nav:hover { background-color:#17637d; transform:scale(1.1);}
+.prev-btn { left:-20px;}
+.next-btn { right:-20px;}
+
+.message { max-width:90%; margin:25px auto; background:rgba(255,255,255,0.85); padding:25px; border-radius:15px; font-size:1em; line-height:1.6em; color:#333; text-align:justify;}
+.heart-button { display:inline-block; width:55px; height:55px; background-color:#000; color:white; font-size:20px; line-height:55px; text-align:center; border-radius:50%; text-decoration:none; transition:transform 0.3s, background-color 0.3s; box-shadow:0 5px 12px rgba(0,0,0,0.3);}
+.heart-button:hover { background-color:#333; transform:scale(1.1) rotate(-5deg); }
+
+footer { font-size:0.8em; margin:30px 0 15px; color:#000;}
+
+@keyframes fadeIn { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
+.floating-heart, .confetti, .sparkle { position:fixed; pointer-events:none; animation:floatUp linear forwards; opacity:0.8;}
+@keyframes floatUp { 0%{transform:translateY(0) scale(1);opacity:1;} 100%{transform:translateY(-120vh) scale(1.8);opacity:0;}}
+.sparkle { animation-duration:2s; font-size:16px;}
+
+.music-card { width:320px; max-width:90%; margin:20px auto; border-radius:15px; overflow:hidden; box-shadow:0 8px 20px rgba(0,0,0,0.25); background:#fff; transition:transform 0.3s, box-shadow 0.3s;}
+.music-card:hover { transform:scale(1.05); box-shadow:0 12px 28px rgba(0,0,0,0.35);}
+.music-card iframe { display:block; border:none;}
+
+@media(max-width:600px){
+  h1{font-size:2em;}
+  h2{font-size:1em;}
+  .counter{font-size:1.2em;}
+  .heart-nav{width:40px;height:40px;font-size:18px;}
+  .heart-button{width:50px;height:50px;line-height:50px;font-size:18px;}
+  .music-card{width:90%;}
+  .polaroid img{max-height:220px;}
+}
+</style>
+</head>
+
+<body>
+<header>
+<h1>Feliz Aniversario, mi amor 💙💚</h1>
+<h2>Juntos desde el 12 de septiembre de 2024</h2>
+<div class="counter" id="loveDays">Han pasado X días de amor</div>
+</header>
+
+<div class="carousel-container">
+  <button class="heart-nav prev-btn" onclick="prevImage()">💕</button>
+  <div class="polaroid">
+    <img id="carouselImage" src="Foto/1.jpg" alt="Foto de nosotros" />
+    <div class="caption" id="photoCaption"></div>
+  </div>
+  <button class="heart-nav next-btn" onclick="nextImage()">💕</button>
+</div>
+
+<div class="message">
+<p>Desde que nuestras vidas se cruzaron aquel día, todo cambió. Cada instante contigo ha sido un recordatorio de que el amor verdadero existe. 💕</p>
+<p>Gracias por tu paciencia, tu ternura y tus sonrisas que iluminan mis días más grises. ✨</p>
+<p>Te prometo seguir aprendiendo de ti, cuidándote y amándote con cada parte de mi ser. 💞</p>
+<p>Se que no es mucho, pero siempre atesoro cualquier momento contigo. 💙💚</p>
+<a class="heart-button" href="https://wa.me/4423977272?text=¡Feliz%20aniversario!" target="_blank">💬</a>
+</div>
+
+<div class="music-card">
+<iframe src="https://open.spotify.com/embed/playlist/6THB4vdDeA7ASsq4mOiaPJ" width="100%" height="80" allowtransparency="true" allow="encrypted-media"></iframe>
+</div>
+
+<footer>Hecho con 💙💚 por Adriana para Edson – 2025</footer>
+
+<script>
+// --- Contador de días ---
+const startDate = new Date("2024-09-12");
+const today = new Date();
+const diffDays = Math.floor((today - startDate)/(1000*60*60*24));
+document.getElementById("loveDays").textContent = `Han pasado ${diffDays} días de amor 💙💚`;
+
+// --- Fotos del carrusel ---
+const images = [
+  {src:"Foto/1.jpg", caption:"Foto con nubecita porque te quiere mucho. 💕", bg:"#f5c7b8", emojis:"💖✨💙"},
+  {src:"Foto/2.jpg", caption:"Siempre sabes como posar, además de ser día muy lluvioso. 🌧️💖", bg:"#a3d5d3", emojis:"💙🌈💦"},
+  {src:"Foto/3.jpg", caption:"Disfrutando de cada comida juntos. 🍽️❤️", bg:"#f9c6c9", emojis:"💚💫🍷"},
+  {src:"Foto/4.jpg", caption:"Siempre guapo, las sonrisas no faltan. 😄💚", bg:"#ffe6a7", emojis:"😂💖🌸"},
+  {src:"Foto/5.jpg", caption:"Fiestitas, cumpleaños juntos. 🎶💙", bg:"#d0b3ff", emojis:"🎵💞🎤"},
+  {src:"Foto/6.jpg", caption:"Conciertito de LJ. 🤗💖", bg:"#ffcccc", emojis:"💖🤗💙"},
+  {src:"Foto/7.jpg", caption:"Me gusta tomarte fotos sorpresas. 🎁💚", bg:"#c8f1c8", emojis:"🎁✨💚"},
+  {src:"Foto/8.jpg", caption:"Aunque vayamos luego a un mismo lugar, siempre es una aventura nueva. ✈️💙", bg:"#c8e0f1", emojis:"🌟💖✈️"},
+  {src:"Foto/9.jpg", caption:"Notas de música que siempre me llegan al corazón. 📝💕", bg:"#fff3c2", emojis:"💌💞📝"},
+  {src:"Foto/10.jpg", caption:"Tardes de parque. 🍦💖", bg:"#f8c8c8", emojis:"🍨✨💖"},
+  {src:"Foto/11.jpg", caption:"Viajecito tranquilo. 🎬💚", bg:"#d3f4ff", emojis:"🎥🍿💚"},
+  {src:"Foto/12.jpg", caption:"Vistas únicas, escaleras interminables, pero siempre valen la pena. 🧺💙", bg:"#e0ffc8", emojis:"🧺🌸💙"},
+  {src:"Foto/13.jpg", caption:"Un corazón muy coqueto. 💃🕺💕", bg:"#ffc8e0", emojis:"💃🕺💖"},
+  {src:"Foto/14.jpg", caption:"Siempre me sorprendes con lo mucho que puedes llegar a comer. 💌💖", bg:"#c8f0ff", emojis:"💌💞✨"},
+  {src:"Foto/15.jpg", caption:"Tardecito de vive latino. 🌅💚", bg:"#ffebc8", emojis:"🌅💚💖"},
+  {src:"Foto/16.jpg", caption:"Siempre festejando cada mes. ☕💙", bg:"#c8baff", emojis:"☕💙💫"},
+  {src:"Foto/17.jpg", caption:"Puro compromiso, disfrutando a tu lado. 📚💖", bg:"#ffe0c8", emojis:"📚💖✨"},
+  {src:"Foto/18.jpg", caption:"Paseo en bicicleta, viento, sol y risas. 🚴‍♂️💚", bg:"#c8ffc8", emojis:"🚴‍♂️💚💨"},
+  {src:"Foto/19.jpg", caption:"Mar, amor, paisajes únicos a tu lado. 🤗💙", bg:"#c8d4ff", emojis:"🤗💙💖"},
+  {src:"Foto/20.jpg", caption:"Siempre me gusta cómo salimos en las fotos. 💙💖", bg:"#fff0c8", emojis:"🍳💖😂"},
+  {src:"Foto/21.jpg", caption:"Hiciste un cumpleaños inolvidable. 🎉💕", bg:"#ffc8c8", emojis:"🎉💕💖"},
+  {src:"Foto/22.jpg", caption:"Nochecita juntos. ✨💚", bg:"#c8c8ff", emojis:"✨💚🌌"},
+  {src:"Foto/23.jpg", caption:"El chisme siempre nos llama. 💌💙", bg:"#c8f4ff", emojis:"💌💙💖"},
+  {src:"Foto/24.jpg", caption:"Una noche fría, un anillo y una promesa. ❄️💖", bg:"#e0f0ff", emojis:"❄️💖⛄"},
+  {src:"Foto/25.jpg", caption:"Sorpresa inolvidable que preparaste, que estuviera cerrada la cineteca. 😂🎁💚", bg:"#c8ffe0", emojis:"🎁💚✨"},
+  {src:"Foto/26.jpg", caption:"Fotos navideñas. 🚗🎶💙", bg:"#ffc8f0", emojis:"🚗🎶💙"},
+  {src:"Foto/27.jpg", caption:"Tarde de juegos y diversión infinita. 🎲💕", bg:"#f0ffc8", emojis:"🎲💕😂"},
+  {src:"Foto/28.jpg", caption:"Conciertos inolvidables a tu lado. 🤗💖", bg:"#c8f0ff", emojis:"🤗💖💙"},
+  {src:"Foto/29.jpg", caption:"Paseo a tomarnos fotitos cute. 💚", bg:"#c8ffe8", emojis:"🚴‍♀️💚💨"},
+  {src:"Foto/30.jpg", caption:"Tarde de parque, cuidándote. 💙", bg:"#e0c8ff", emojis:"🍿💙🎥"},
+  {src:"Foto/31.jpg", caption:"Sentía que te ibas a lado de nuestro señor. 💖", bg:"#fffac8", emojis:"🧺💖😂"},
+  {src:"Foto/32.jpg", caption:"Noche de baile. 📸💚", bg:"#c8f0c8", emojis:"📸💚😄"},
+  {src:"Foto/33.jpg", caption:"Me encanta tomarte fotos distraído. 📸💙", bg:"#ffc8c8", emojis:"🍦💙🍫"},
+  {src:"Foto/34.jpg", caption:"Tarde de Halloween. 🌙💕", bg:"#c8dfff", emojis:"☔💕💖"},
+  {src:"Foto/35.jpg", caption:"Foto destinada a salir muy linda. 💌💖", bg:"#fff0c8", emojis:"💌💖✨"},
+  {src:"Foto/36.jpg", caption:"Fotos chistosas. 📸💚", bg:"#c8c8ff", emojis:"🌙💚✨"},
+  {src:"Foto/37.jpg", caption:"Tarde de chocolate, risas, pizza, coyoacán y festejo. 😂💙", bg:"#c8e0ff", emojis:"😂💙💖"},
+  {src:"Foto/38.jpg", caption:"Primer concierto juntos. 💖", bg:"#fff0c8", emojis:"🥐💖☕"},
+  {src:"Foto/39.jpg", caption:"Tarde de acuario. 🏞️💚", bg:"#c8ffc8", emojis:"🏞️💚✨"},
+  {src:"Foto/40.jpg", caption:"El primer día de novios. 🤗💙", bg:"#c8d4ff", emojis:"🤗💙💖"}
+];
+
+let currentIndex = 0;
+const carouselImage = document.getElementById("carouselImage");
+const photoCaption = document.getElementById("photoCaption");
+
+function showImage(index){
+  const img = images[index];
+  carouselImage.src = img.src;
+  photoCaption.textContent = img.caption;
+  document.body.style.background = img.bg;
+  createSparkles(img.emojis,5);
+}
+
+function prevImage(){ currentIndex=(currentIndex-1+images.length)%images.length; showImage(currentIndex);}
+function nextImage(){ currentIndex=(currentIndex+1)%images.length; showImage(currentIndex);}
+
+showImage(0);
+setInterval(nextImage,4000);
+
+// --- Animaciones flotantes ---
+function createHeart(){
+  const heart=document.createElement("div");
+  heart.classList.add("floating-heart");
+  const emojis=["💙","💚","💖","💕"];
+  heart.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.fontSize=(16+Math.random()*20)+"px";
+  heart.style.animationDuration=(3+Math.random()*4)+"s";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),7000);
+}
+
+function createConfetti(){
+  const conf=document.createElement("div");
+  conf.classList.add("confetti");
+  const colors=["#ff4d6d","#ffd700","#00ff99","#66ccff"];
+  conf.style.color=colors[Math.floor(Math.random()*colors.length)];
+  conf.innerText="❀";
+  conf.style.left=Math.random()*100+"vw";
+  conf.style.fontSize=(12+Math.random()*16)+"px";
+  conf.style.animationDuration=(2+Math.random()*3)+"s";
+  document.body.appendChild(conf);
+  setTimeout(()=>conf.remove(),5000);
+}
+
+function createSparkles(chars,count){
+  for(let i=0;i<count;i++){
+    const sparkle=document.createElement("div");
+    sparkle.classList.add("sparkle");
+    sparkle.style.position="absolute";
+    sparkle.style.top=(20+Math.random()*60)+"%";
+    sparkle.style.left=(20+Math.random()*60)+"%";
+    sparkle.style.fontSize=(16+Math.random()*24)+"px";
+    sparkle.innerText=chars[Math.floor(Math.random()*chars.length)];
+    document.querySelector(".polaroid").appendChild(sparkle);
+    setTimeout(()=>sparkle.remove(),2000);
+  }
+}
+
+setInterval(createHeart,700);
+setInterval(createConfetti,1000);
+</script>
+</body>
+</html>
